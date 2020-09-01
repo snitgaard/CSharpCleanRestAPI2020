@@ -41,7 +41,8 @@ namespace PetShop.RestAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            //app.UseHttpsRedirection();
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 

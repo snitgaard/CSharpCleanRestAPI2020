@@ -8,8 +8,8 @@ namespace PetShop.Infrastructure.Data
 {
     public class PetRepository : IPetRepository
     {
-        private static int id = 1;
-        private List<Pet> _pets = new List<Pet>();
+        static int id = 1;
+        static List<Pet> _pets = new List<Pet>();
 
         public Pet Create(Pet pet)
         {

@@ -36,21 +36,36 @@ namespace PetShop.RestAPI.Controllers
 
         // POST api/<PetShopController>
         [HttpPost]
-        public void Post([FromBody] Pet pet)
+        public ActionResult<Pet> Post([FromBody] Pet pet)
         {
-            _petService.CreatePet(pet);
+            if(string.IsNullOrEmpty(pet.Name))
+            {
+                return BadRequest("Name is required for creating a pet");
+            }
+
+            if(string.IsNullOrEmpty(pet.Type))
+            {
+                return BadRequest("Type is required for creating a pet");
+            }
+            if(string.IsNullOrEmpty(pet.Color))
+            {
+                return BadRequest("Color is required for creating a pet");
+            }
+            return _petService.CreatePet(pet); 
         }
 
         // PUT api/<PetShopController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Pet pet)
         {
+            _petService.UpdatePet(pet);
         }
 
         // DELETE api/<PetShopController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _petService.DeletePet(id);
         }
     }
 }

@@ -31,6 +31,10 @@ namespace PetShop.RestAPI
         {
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
+
+            services.AddScoped<IOwnerRepository, OwnerRepository>();
+            services.AddScoped<IOwnerService, OwnerService>();
+
             services.AddControllers();
         }
 
@@ -42,8 +46,9 @@ namespace PetShop.RestAPI
                 app.UseDeveloperExceptionPage();
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    var repo = scope.ServiceProvider.GetService<IPetRepository>();
-                    new DataInit(repo).InitData();
+                    var petRepo = scope.ServiceProvider.GetService<IPetRepository>();
+                    var ownerRepo = scope.ServiceProvider.GetService<IOwnerRepository>();
+                    new DataInit(petRepo, ownerRepo).InitData();
                 }
             }
 

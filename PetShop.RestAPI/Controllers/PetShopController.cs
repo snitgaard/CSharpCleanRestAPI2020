@@ -20,21 +20,32 @@ namespace PetShop.RestAPI.Controllers
         {
             _petService = petService;
         }
-        // GET: api/<PetShopController>
+        /// <summary>
+        /// Returns list of all pets as JSON
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<Pet> Get()
         {
             return _petService.GetPets();
         }
 
-        // GET api/<PetShopController>/5
+        /// <summary>
+        /// Returns pet with the ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public Pet Get(int id)
         {
             return _petService.FindPetById(id);
         }
 
-        // POST api/<PetShopController>
+        /// <summary>
+        /// Returns the Pet that was created
+        /// </summary>
+        /// <param name="pet"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<Pet> Post([FromBody] Pet pet)
         {
@@ -53,14 +64,22 @@ namespace PetShop.RestAPI.Controllers
             return _petService.CreatePet(pet); 
         }
 
-        // PUT api/<PetShopController>/5
+
+        /// <summary>
+        /// Returns the Pet that was updated
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pet"></param>
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Pet pet)
         {
             _petService.UpdatePet(pet);
         }
 
-        // DELETE api/<PetShopController>/5
+        /// <summary>
+        /// Returns the pet deleted
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

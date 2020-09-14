@@ -29,9 +29,9 @@ namespace PetShop.RestAPI.Controllers
 
         // GET api/<PetShopController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Pet Get(int id)
         {
-            return "value";
+            return _petService.FindPetById(id);
         }
 
         // POST api/<PetShopController>
@@ -42,7 +42,6 @@ namespace PetShop.RestAPI.Controllers
             {
                 return BadRequest("Name is required for creating a pet");
             }
-
             if(string.IsNullOrEmpty(pet.Type))
             {
                 return BadRequest("Type is required for creating a pet");

@@ -9,10 +9,13 @@ namespace PetShop.Infrastructure.Data
     public class DataInit
     {
         private readonly IPetRepository _petRepository;
+        private readonly IOwnerRepository _ownerRepository;
 
-        public DataInit(IPetRepository petRepository)
+
+        public DataInit(IPetRepository petRepository, IOwnerRepository ownerRepository)
         {
             _petRepository = petRepository;
+            _ownerRepository = ownerRepository;
         }
 
         public void InitData()
@@ -27,7 +30,13 @@ namespace PetShop.Infrastructure.Data
                 SoldDate = new DateTime(2018, 7, 10),
                 PreviousOwner = "Johnny Bravo"
             };
+            var owner1 = new Owner
+            {
+                Name = "Michael Jackson",
+                Address = "JohnnyBravo Street"
+            };
             _petRepository.Create(pet1);
+            _ownerRepository.Create(owner1);
         }
     }
 }

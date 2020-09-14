@@ -41,8 +41,8 @@ namespace PetShop.RestAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            //if (env.IsDevelopment())
+            //{
                 app.UseDeveloperExceptionPage();
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
@@ -50,7 +50,7 @@ namespace PetShop.RestAPI
                     var ownerRepo = scope.ServiceProvider.GetService<IOwnerRepository>();
                     new DataInit(petRepo, ownerRepo).InitData();
                 }
-            }
+            //}
 
             app.UseHttpsRedirection();
 

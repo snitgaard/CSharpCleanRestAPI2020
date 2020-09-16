@@ -34,9 +34,9 @@ namespace PetShop.RestAPI
 
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IOwnerService, OwnerService>();
-            
 
-
+            services.AddScoped<IPetTypeRepository, PetTypeRepository>();
+            services.AddScoped<IPetTypeService, PetTypeService>();
 
             services.AddControllers();
 
@@ -61,7 +61,8 @@ namespace PetShop.RestAPI
                 {
                     var petRepo = scope.ServiceProvider.GetService<IPetRepository>();
                     var ownerRepo = scope.ServiceProvider.GetService<IOwnerRepository>();
-                    new DataInit(petRepo, ownerRepo).InitData();
+                    var petTypeRepo = scope.ServiceProvider.GetService<IPetTypeRepository>();
+                    new DataInit(petRepo, ownerRepo, petTypeRepo).InitData();
                 }
             //}
 

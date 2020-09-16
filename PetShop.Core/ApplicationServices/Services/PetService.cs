@@ -10,13 +10,15 @@ namespace PetShop.Core.ApplicationServices.Services
     public class PetService: IPetService
     {
         private readonly IPetRepository _petRepo;
+        private readonly IPetTypeRepository _petTypeRepo;
 
-        public PetService(IPetRepository petRepository)
+        public PetService(IPetRepository petRepository, IPetTypeRepository petTypeRepository)
         {
             _petRepo = petRepository;
+            _petTypeRepo = petTypeRepository;
         }
 
-        public Pet NewPet(string name, string type, DateTime birthDate, DateTime soldDate, string color,
+        public Pet NewPet(string name, PetType type, DateTime birthDate, DateTime soldDate, string color,
             string previousOwner, double price)
         {
             var pet = new Pet()
@@ -42,7 +44,7 @@ namespace PetShop.Core.ApplicationServices.Services
             return _petRepo.ReadPets().ToList();
         }
 
-        public List<Pet> GetAllByType(string type)
+        public List<Pet> GetAllByType(PetType type)
         {
             var list = _petRepo.ReadPets();
             var query = list.Where(pet => pet.Type.Equals(type));
@@ -93,6 +95,5 @@ namespace PetShop.Core.ApplicationServices.Services
         {
             return _petRepo.Delete(id);
         }
-
     }
 }

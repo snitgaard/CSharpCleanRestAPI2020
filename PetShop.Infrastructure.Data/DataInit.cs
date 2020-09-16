@@ -10,26 +10,39 @@ namespace PetShop.Infrastructure.Data
     {
         private readonly IPetRepository _petRepository;
         private readonly IOwnerRepository _ownerRepository;
+        private readonly IPetTypeRepository _petTypeRepository;
 
+        public static readonly List<Pet> Pets = new List<Pet>();
+        public static readonly List<PetType> PetTypes = new List<PetType>();
 
-        public DataInit(IPetRepository petRepository, IOwnerRepository ownerRepository)
+        public DataInit(IPetRepository petRepository, IOwnerRepository ownerRepository, IPetTypeRepository petTypeRepository)
         {
             _petRepository = petRepository;
             _ownerRepository = ownerRepository;
+            _petTypeRepository = petTypeRepository;
         }
 
         public void InitData()
         {
+            var petType = new PetType
+            {
+                Type = "Giraffe"
+
+            };
+            _petTypeRepository.Create(petType);
+            PetTypes.Add(petType);
+
             var pet1 = new Pet
             {
                 Name = "Billy Joel",
-                Type = "Dog",
+                Type = new PetType() {Id = 1},
                 Color = "Golden",
                 BirthDate = new DateTime(2018, 6, 10),
                 Price = 100,
                 SoldDate = new DateTime(2018, 7, 10),
                 PreviousOwner = "Johnny Bravo"
             };
+
             var owner1 = new Owner
             {
                 Name = "Michael Jackson",

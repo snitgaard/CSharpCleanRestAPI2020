@@ -53,10 +53,10 @@ namespace PetShop.RestAPI.Controllers
             {
                 return BadRequest("Name is required for creating a pet");
             }
-            if(string.IsNullOrEmpty(pet.Type))
-            {
-                return BadRequest("Type is required for creating a pet");
-            }
+            //if(string.IsNullOrEmpty(pet.Type))
+            //{
+            //    return BadRequest("Type is required for creating a pet");
+            //}
             if(string.IsNullOrEmpty(pet.Color))
             {
                 return BadRequest("Color is required for creating a pet");

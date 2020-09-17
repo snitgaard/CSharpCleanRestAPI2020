@@ -8,11 +8,11 @@ namespace PetShop.Core.ApplicationServices
     public interface IPetTypeService
     {
         PetType NewPetType(string type);
+
         PetType CreatePetType(PetType petType);
         List<PetType> GetPetTypes();
         PetType FindPetTypeById(int id);
         PetType UpdatePetType(PetType updatePetType);
-        PetType FindPetByIdIncludeType(int id);
         PetType DeletePetType(int id);
     }
 }

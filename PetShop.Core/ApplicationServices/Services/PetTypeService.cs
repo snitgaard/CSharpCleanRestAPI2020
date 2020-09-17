@@ -7,7 +7,7 @@ using PetShop.Core.Entity;
 
 namespace PetShop.Core.ApplicationServices.Services
 {
-    public class PetTypeService: IPetTypeService
+    public class PetTypeService : IPetTypeService
     {
         private readonly IPetTypeRepository _petTypeRepo;
         private readonly IPetRepository _petRepo;
@@ -52,13 +52,6 @@ namespace PetShop.Core.ApplicationServices.Services
         public PetType DeletePetType(int id)
         {
             return _petTypeRepo.Delete(id);
-        }
-
-        public PetType FindPetByIdIncludeType(int id)
-        {
-            var petType = _petTypeRepo.ReadById(id);
-            petType.Pets = _petRepo.ReadPets().Where(pet => pet.Type.Id == petType.Id).ToList();
-            return petType;
         }
     }
 }

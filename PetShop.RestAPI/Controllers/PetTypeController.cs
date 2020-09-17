@@ -32,7 +32,7 @@ namespace PetShop.RestAPI.Controllers
         {
             try
             {
-                return _petTypeService.FindPetByIdIncludeType(id);
+                return _petTypeService.FindPetTypeById(id);
             }
             catch (Exception)
             {

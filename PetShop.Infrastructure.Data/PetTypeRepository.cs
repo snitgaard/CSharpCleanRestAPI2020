@@ -21,20 +21,14 @@ namespace PetShop.Infrastructure.Data
 
         public PetType ReadById(int id)
         {
-            return DataInit.PetTypes.Select(p => new PetType()
+            foreach (var petType in _petTypes)
             {
-                Id = p.Id,
-                Type = p.Type
-            }).FirstOrDefault(p => p.Id == id);
-
-            //foreach (var petType in _petTypes)
-            //{
-            //    if (petType.Id == id)
-            //    {
-            //        return petType;
-            //    }
-            //}
-            //return null;
+                if (petType.Id == id)
+                {
+                    return petType;
+                }
+            }
+            return null;
         }
 
         public IEnumerable<PetType> ReadPetTypes()

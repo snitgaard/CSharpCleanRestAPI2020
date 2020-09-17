@@ -30,15 +30,14 @@ namespace PetShop.RestAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<PetType> Get(int id)
         {
-            if (id < 1)
-            {
-                return StatusCode(500, "Id must be greater than 0.");
-            }
-            if (id != null)
+            try
             {
                 return _petTypeService.FindPetByIdIncludeType(id);
             }
-            return StatusCode(404, "Pet was not found");
+            catch (Exception)
+            {
+                return StatusCode(500, "Id must be greater than 0");
+            }              
         }
 
         // POST api/<PetTypeController>

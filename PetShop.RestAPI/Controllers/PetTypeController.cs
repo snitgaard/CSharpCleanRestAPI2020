@@ -23,42 +23,87 @@ namespace PetShop.RestAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<PetType>> Get()
         {
-            return Ok(_petTypeService.GetPetTypes());
+            try
+            {
+                return Ok(_petTypeService.GetPetTypes());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500,
+                    "Hmm yes, I can sense something is wrong... Not gonna tell you what tho, you'll have to figure it out.");
+            }
         }
 
         // GET api/<PetTypeController>/5
         [HttpGet("{id}")]
         public ActionResult<PetType> Get(int id)
         {
+            var petType = _petTypeService.FindPetTypeById(id);
+
+            if (petType == null)
+            {
+                return StatusCode(404, "Pet was not found.");
+            }
             try
             {
-                return _petTypeService.FindPetTypeById(id);
+                return Ok(petType);
             }
             catch (Exception)
             {
-                return StatusCode(500, "Id must be greater than 0");
-            }              
+                return StatusCode(500, "Something went horribly wrong. Sucks to suck");
+            }
         }
 
         // POST api/<PetTypeController>
         [HttpPost]
         public ActionResult<PetType> Post([FromBody] PetType petType)
         {
+            if (string.IsNullOrEmpty(petType.Type))
+            {
+                return StatusCode(500, "Something went wrong.");
+            }
             return _petTypeService.CreatePetType(petType);
         }
 
         // PUT api/<PetTypeController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] PetType petType)
+        public ActionResult<PetType> Put(int id, [FromBody] PetType petType)
         {
-            _petTypeService.UpdatePetType(petType);
+            var updatePet = _petTypeService.UpdatePetType(petType);
+            if(updatePet == null)
+            {
+                return StatusCode(404, "Pet was not found");
+            }
+
+            try
+            {
+                return updatePet;
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Do better");
+            }
+
         }
 
         // DELETE api/<PetTypeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<PetType> Delete(int id)
         {
-            _petTypeService.DeletePetType(id);
+            var deletePet = _petTypeService.DeletePetType(id);
+            if (deletePet == null)
+            {
+                return StatusCode(404, "Pet was not found");
+            }
+
+            try
+            {
+                return deletePet;
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Something went horribly wrong");
+            }
         }
     }
 }

@@ -22,16 +22,36 @@ namespace PetShop.RestAPI.Controllers
         }
         // GET: api/<PetShopController>
         [HttpGet]
-        public IEnumerable<Owner> Get()
+        public ActionResult<IEnumerable<Owner>> Get()
         {
-            return _ownerService.GetAllOwners();
+            try
+            {
+                return Ok(_ownerService.GetAllOwners());
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Something is not right..");
+            }
         }
 
         // GET api/<PetShopController>/5
         [HttpGet("{id}")]
-        public Owner Get(int id)
+        public ActionResult<Owner> Get(int id)
         {
-            return _ownerService.FindOwnerById(id);
+            var foundOwner = _ownerService.FindOwnerById(id);
+            if (foundOwner == null)
+            {
+                return StatusCode(404, "Owner was not found");
+            }
+
+            try
+            {
+                return foundOwner;
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Yes it sucks. Deal with it");
+            }
         }
 
         // POST api/<PetShopController>
@@ -40,28 +60,54 @@ namespace PetShop.RestAPI.Controllers
         {
             if (string.IsNullOrEmpty(owner.Name))
             {
-                return BadRequest("Name is required for creating a owner");
+                return StatusCode(500, "Name is required for creating a owner");
             }
 
             if (string.IsNullOrEmpty(owner.Address))
             {
-                return BadRequest("Address is required for creating an owner");
+                return StatusCode(500, "Address is required for creating an owner");
             }
             return _ownerService.CreateOwner(owner);
         }
 
         // PUT api/<PetShopController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Owner owner)
+        public ActionResult<Owner> Put(int id, [FromBody] Owner owner)
         {
-            _ownerService.UpdateOwner(owner);
+            var updateOwner = _ownerService.UpdateOwner(owner);
+            if (updateOwner == null)
+            {
+                return StatusCode(404, "Owner was not found");
+            }
+
+            try
+            {
+                return updateOwner;
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Shit happens.");
+            }
         }
 
         // DELETE api/<PetShopController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<Owner> Delete(int id)
         {
-            _ownerService.DeleteOwner(id);
+            var deleteOwner = _ownerService.DeleteOwner(id);
+            if (deleteOwner == null)
+            {
+                return StatusCode(404, "Owner was not found");
+            }
+
+            try
+            {
+                return deleteOwner;
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Did not work.");
+            }
         }
     }
 }

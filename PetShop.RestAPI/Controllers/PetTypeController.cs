@@ -79,7 +79,7 @@ namespace PetShop.RestAPI.Controllers
             {
                 return updatePet;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return StatusCode(500, "Do better");
             }
@@ -105,5 +105,21 @@ namespace PetShop.RestAPI.Controllers
                 return StatusCode(500, "Something went horribly wrong");
             }
         }
+        [HttpGet("{type}")]
+        [Route("[action]/{type}")]
+        public ActionResult<PetType> GetFilteredPetTypes(string type)
+        {
+            var petType= _petTypeService.GetAllByName(type);
+
+            try
+            {
+                return Ok(petType);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Something went horribly wrong during execution. Rename please.");
+            }
+        }
+
     }
 }

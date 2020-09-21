@@ -53,5 +53,13 @@ namespace PetShop.Core.ApplicationServices.Services
         {
             return _petTypeRepo.Delete(id);
         }
+
+        public List<PetType> GetAllByName(string type)
+        {
+            var list = _petTypeRepo.ReadPetTypes();
+            var query = list.Where(pettype => pettype.Type.Equals(type));
+            query.OrderBy(pettype => pettype.Type);
+            return query.ToList();
+        }
     }
 }

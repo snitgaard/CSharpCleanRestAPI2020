@@ -50,7 +50,6 @@ namespace PetShop.RestAPI.Controllers
             {
                 return StatusCode(404, "Pet was not found");
             }
-
             try
             {
                 return foundPet;
@@ -122,6 +121,22 @@ namespace PetShop.RestAPI.Controllers
             catch (Exception)
             {
                 return StatusCode(500, "Nope.");
+            }
+        }
+
+        [HttpGet("{type}")]
+        [Route("[action]/{type}")]
+        public ActionResult<Pet> GetFilteredPets(string type)
+        {
+            var pet = _petService.GetAllByType(type); ;
+
+            try
+            {
+                return Ok(pet);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Something went horribly wrong during execution. I don't know what to tell you.");
             }
         }
     }

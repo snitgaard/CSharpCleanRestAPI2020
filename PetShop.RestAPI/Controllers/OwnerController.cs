@@ -99,7 +99,6 @@ namespace PetShop.RestAPI.Controllers
             {
                 return StatusCode(404, "Owner was not found");
             }
-
             try
             {
                 return deleteOwner;
@@ -109,5 +108,22 @@ namespace PetShop.RestAPI.Controllers
                 return StatusCode(500, "Did not work.");
             }
         }
+
+        [HttpGet("{name}")]
+        [Route("[action]/{name}")]
+        public ActionResult<List<Owner>> GetFilteredOwners(string name)
+        {
+            var owner = _ownerService.GetAllByName(name);
+            try
+            {
+                return Ok(owner);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Something went horribly wrong during execution. Pathetic.");
+            }
+        }
+    }
+
     }
 }

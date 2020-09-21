@@ -109,7 +109,7 @@ namespace PetShop.RestAPI.Controllers
         [Route("[action]/{type}")]
         public ActionResult<PetType> GetFilteredPetTypes(string type)
         {
-            var petType= _petTypeService.GetAllByName(type);
+            var petType= _petTypeService.GetAllByType(type);
 
             try
             {

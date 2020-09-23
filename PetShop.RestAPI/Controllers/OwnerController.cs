@@ -36,6 +36,7 @@ namespace PetShop.RestAPI.Controllers
 
         // GET api/<PetShopController>/5
         [HttpGet("{id}")]
+        [Route("[action]/{id}")]
         public ActionResult<Owner> Get(int id)
         {
             var foundOwner = _ownerService.FindOwnerById(id);
@@ -126,4 +127,3 @@ namespace PetShop.RestAPI.Controllers
     }
 
     }
-}
